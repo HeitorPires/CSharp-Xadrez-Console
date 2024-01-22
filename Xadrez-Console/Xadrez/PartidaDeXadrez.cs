@@ -7,9 +7,9 @@ namespace xadrez
     class PartidaDeXadrez
     {
         public Tabuleiro Tab { get; private set; }
-        public bool terminada {  get; private set; }
-        private int Turno;
-        private Cor JogadorAtual;
+        public bool terminada { get; private set; }
+        public  int Turno { get; private set; }
+        public Cor JogadorAtual { get; private set;}
 
         public PartidaDeXadrez()
         {
@@ -26,6 +26,41 @@ namespace xadrez
             pecaOrigem.IncrementarQteMovimentos();
             Peca pecaCapturada =Tab.RetirarPeca(destino);
             Tab.ColocarPeca(pecaOrigem, destino);
+        }
+
+        public void validarPosicaoDeOrigem(Posicao pos)
+        {
+            Tab.ValidarPosicao(pos);
+
+            if (Tab.GetPeca(pos) == null)
+                throw new TabuleiroException("Não existe peca na posicão de origem escolhida!");
+
+            if(JogadorAtual != Tab.GetPeca(pos).Cor)
+                    throw new TabuleiroException("A peca de origem escolhida não é sua!");
+
+            if (!Tab.GetPeca(pos).ExisteMovimentosPossiveis())
+                throw new TabuleiroException("Não há movimentos possíveis para a peca de origem escolhida");
+        }
+
+        public void ValidarPosicaoDestino(Posicao origem, Posicao destino)
+        {
+            if (!Tab.GetPeca(origem).PodeMoverPara(destino))
+                throw new TabuleiroException("Posicão de destino inválida");
+        }
+
+        public void RealizaJogada(Posicao origem, Posicao destino)
+        {
+            ExecutaMovimento(origem, destino);
+            Turno++;
+            MudaJogador();
+        }
+
+        public void MudaJogador()
+        {
+            if (JogadorAtual == Cor.Branca)
+                JogadorAtual = Cor.Preta;
+            else
+                JogadorAtual = Cor.Branca;
         }
 
         private void ColocarPecas()
