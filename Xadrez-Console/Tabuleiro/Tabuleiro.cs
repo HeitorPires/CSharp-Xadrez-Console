@@ -47,7 +47,7 @@
             return aux;
         }
 
-        public bool PosicalValida(Posicao pos)
+        public bool PosicaoValida(Posicao pos)
         {
             if(pos.Linha < 0 || pos.Linha >= Linhas || pos.Coluna < 0 || pos.Coluna >= Colunas)
                 return false;
@@ -56,7 +56,7 @@
 
         public void ValidarPosicao(Posicao pos)
         {
-            if (!PosicalValida(pos))
+            if (!PosicaoValida(pos))
                 throw new TabuleiroException("Posicão inválida!");
         }
     }

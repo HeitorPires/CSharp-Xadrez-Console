@@ -51,15 +51,21 @@ namespace Xadrez_Console
 
         public static void ImprimirTabuleiro(Tabuleiro tab)
         {
+            ConsoleColor aux = Console.ForegroundColor;
             for (int i = 0; i < tab.Linhas; i++)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write(8 - i + " ");
+                Console.ForegroundColor = aux;
                 for (int j = 0; j < tab.Colunas; j++)
                     ImprimirPeca(tab.GetPeca(i, j));
 
                 Console.WriteLine();
             }
+
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("  a b c d e f g h ");
+            Console.ForegroundColor = aux;
         }
 
         public static void ImprimirTabuleiro(Tabuleiro tab, bool[,] posicoesPossiveis)
